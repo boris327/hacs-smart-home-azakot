@@ -1,0 +1,6 @@
+{
+  "name": "Oref Alert — פיקוד העורף",
+  "render_readme": true,
+  "homeassistant": "2023.1.0",
+  "country": ["IL"]
+}

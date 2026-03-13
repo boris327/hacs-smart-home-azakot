@@ -1,0 +1,12 @@
+{
+  "domain": "oref_alert",
+  "name": "Oref Alert — פיקוד העורף",
+  "version": "1.0.0",
+  "documentation": "https://github.com/boris327/hacs-oref-alert",
+  "issue_tracker": "https://github.com/boris327/hacs-oref-alert/issues",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@boris327"],
+  "iot_class": "cloud_polling",
+  "config_flow": true
+}

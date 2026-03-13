@@ -1,0 +1,116 @@
+################################################################################
+# פיקוד העורף - REST Sensors
+# הוסף לתוך configuration.yaml תחת מפתח `rest:` (או ב-packages)
+################################################################################
+
+rest:
+  # ─────────────────────────────────────────────
+  # 1. אזעקות פעילות כעת (polling כל 10 שניות)
+  # ─────────────────────────────────────────────
+  - resource: "https://www.oref.org.il/WarningMessages/alert/alerts.json"
+    scan_interval: 10
+    headers:
+      Referer: "https://www.oref.org.il/"
+      X-Requested-With: "XMLHttpRequest"
+      Accept: "application/json, text/plain, */*"
+      User-Agent: "Mozilla/5.0 (compatible; HomeAssistant)"
+    sensor:
+      - name: "oref_active_alert"
+        unique_id: oref_active_alert
+        value_template: >-
+          {% if value_json and value_json.data is defined and value_json.data | length > 0 %}
+            active
+          {% else %}
+            clear
+          {% endif %}
+        json_attributes:
+          - id
+          - cat
+          - title
+          - data
+          - desc
+        icon: mdi:alert-octagon
+
+  # ─────────────────────────────────────────────
+  # 2. היסטוריית אזעקות (polling כל 60 שניות)
+  # ─────────────────────────────────────────────
+  - resource: "https://www.oref.org.il/Shared/Ajax/GetAlarmsHistory.aspx?lang=he&mode=1"
+    scan_interval: 60
+    headers:
+      Referer: "https://www.oref.org.il/"
+      X-Requested-With: "XMLHttpRequest"
+      Accept: "application/json"
+      User-Agent: "Mozilla/5.0 (compatible; HomeAssistant)"
+    sensor:
+      - name: "oref_alert_history"
+        unique_id: oref_alert_history
+        value_template: >-
+          {{ value_json | length if value_json is iterable else 0 }}
+        json_attributes_path: "$"
+        json_attributes:
+          - alertDate
+          - title
+          - data
+          - category
+        icon: mdi:history
+
+################################################################################
+# Template Sensors - עיבוד הנתונים
+# הוסף לתוך configuration.yaml תחת `template:` או בקובץ templates.yaml
+################################################################################
+
+template:
+  - sensor:
+      # כמות האזורים תחת אזעקה
+      - name: "oref_alert_zones_count"
+        unique_id: oref_alert_zones_count
+        state: >-
+          {% set s = states('sensor.oref_active_alert') %}
+          {% if s == 'active' %}
+            {% set attrs = state_attr('sensor.oref_active_alert', 'data') %}
+            {{ attrs | length if attrs is not none else 0 }}
+          {% else %}
+            0
+          {% endif %}
+        icon: mdi:map-marker-multiple
+
+      # רשימת האזורים כטקסט
+      - name: "oref_alert_zones_list"
+        unique_id: oref_alert_zones_list
+        state: >-
+          {% set s = states('sensor.oref_active_alert') %}
+          {% if s == 'active' %}
+            {% set areas = state_attr('sensor.oref_active_alert', 'data') %}
+            {{ areas | join(' • ') if areas is not none else 'אין נתונים' }}
+          {% else %}
+            ✅ אין אזעקות פעילות
+          {% endif %}
+        icon: mdi:map-marker-alert
+
+      # קטגוריית האיום
+      - name: "oref_alert_category"
+        unique_id: oref_alert_category
+        state: >-
+          {% set cat = state_attr('sensor.oref_active_alert', 'cat') %}
+          {% if cat == '1' %} ירי רקטות וטילים
+          {% elif cat == '2' %} רעידת אדמה
+          {% elif cat == '3' %} חדירת כלי טיס עוין
+          {% elif cat == '4' %} אירוע חומרים מסוכנים
+          {% elif cat == '6' %} גל צונאמי
+          {% elif cat == '13' %} חדירת מחבלים
+          {% else %} לא ידוע
+          {% endif %}
+        icon: mdi:shield-alert
+
+  - binary_sensor:
+      # סנסור בינארי - האם יש אזעקה פעילה
+      - name: "oref_alert_active"
+        unique_id: oref_alert_active
+        state: "{{ states('sensor.oref_active_alert') == 'active' }}"
+        device_class: safety
+        icon: >-
+          {% if states('sensor.oref_active_alert') == 'active' %}
+            mdi:alert-octagon
+          {% else %}
+            mdi:shield-check
+          {% endif %}

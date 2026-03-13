@@ -1,0 +1,14 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Oref Alert — Israel Home Front Command",
+        "description": "Install the Oref Alert integration. No additional configuration needed. Data updates every 10 seconds.",
+        "data": {}
+      }
+    },
+    "abort": {
+      "already_configured": "Integration is already configured."
+    }
+  }
+}
