@@ -1,4 +1,4 @@
-"""Oref Alert — פיקוד העורף integration for Home Assistant."""
+"""Smart Home Azakot — אזעקות חכמות — Home Assistant Integration."""
 from __future__ import annotations
 
 import logging
@@ -13,7 +13,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = "oref_alert"
+DOMAIN = "smart_home_azakot"
 PLATFORMS = [Platform.SENSOR, Platform.BINARY_SENSOR]
 
 OREF_ALERT_URL = "https://www.oref.org.il/WarningMessages/alert/alerts.json"
@@ -23,7 +23,7 @@ OREF_HEADERS = {
     "Referer": "https://www.oref.org.il/",
     "X-Requested-With": "XMLHttpRequest",
     "Accept": "application/json, text/plain, */*",
-    "User-Agent": "Mozilla/5.0 (compatible; HomeAssistant/OrefAlert)",
+    "User-Agent": "Mozilla/5.0 (compatible; HomeAssistant/SmartHomeAzakot)",
 }
 
 CATEGORY_MAP = {
@@ -37,13 +37,11 @@ CATEGORY_MAP = {
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Oref Alert from a config entry."""
-    coordinator = OrefAlertCoordinator(hass)
+    """Set up Smart Home Azakot from a config entry."""
+    coordinator = SmartHomeAzakotCoordinator(hass)
     await coordinator.async_config_entry_first_refresh()
-
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = coordinator
-
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
@@ -56,11 +54,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return unload_ok
 
 
-class OrefAlertCoordinator(DataUpdateCoordinator):
+class SmartHomeAzakotCoordinator(DataUpdateCoordinator):
     """Coordinator to fetch Oref Alert data."""
 
     def __init__(self, hass: HomeAssistant) -> None:
-        """Initialize coordinator."""
         super().__init__(
             hass,
             _LOGGER,
@@ -73,15 +70,12 @@ class OrefAlertCoordinator(DataUpdateCoordinator):
         try:
             async with async_timeout.timeout(8):
                 async with aiohttp.ClientSession() as session:
-                    # Active alerts
                     alert_data = {}
                     try:
-                        async with session.get(
-                            OREF_ALERT_URL, headers=OREF_HEADERS
-                        ) as resp:
+                        async with session.get(OREF_ALERT_URL, headers=OREF_HEADERS) as resp:
                             if resp.status == 200:
-                                text = await resp.text(encoding="utf-8-sig")
                                 import json
+                                text = await resp.text(encoding="utf-8-sig")
                                 try:
                                     alert_data = json.loads(text) if text.strip() else {}
                                 except Exception:
@@ -89,15 +83,12 @@ class OrefAlertCoordinator(DataUpdateCoordinator):
                     except Exception as e:
                         _LOGGER.debug("Alert fetch error: %s", e)
 
-                    # History (every ~60s via coordinator)
                     history_data = []
                     try:
-                        async with session.get(
-                            OREF_HISTORY_URL, headers=OREF_HEADERS
-                        ) as resp:
+                        async with session.get(OREF_HISTORY_URL, headers=OREF_HEADERS) as resp:
                             if resp.status == 200:
-                                text = await resp.text(encoding="utf-8-sig")
                                 import json
+                                text = await resp.text(encoding="utf-8-sig")
                                 try:
                                     history_data = json.loads(text) if text.strip() else []
                                 except Exception:
@@ -107,8 +98,6 @@ class OrefAlertCoordinator(DataUpdateCoordinator):
 
                     areas = alert_data.get("data", []) or []
                     cat = str(alert_data.get("cat", ""))
-                    title = alert_data.get("title", "")
-                    desc = alert_data.get("desc", "")
 
                     return {
                         "active": len(areas) > 0,
@@ -117,12 +106,11 @@ class OrefAlertCoordinator(DataUpdateCoordinator):
                         "areas_list": " • ".join(areas) if areas else "אין אזעקות פעילות",
                         "category": CATEGORY_MAP.get(cat, "לא ידוע") if cat else "—",
                         "category_id": cat,
-                        "title": title,
-                        "desc": desc,
+                        "title": alert_data.get("title", ""),
+                        "desc": alert_data.get("desc", ""),
                         "alert_id": alert_data.get("id", ""),
                         "history_count": len(history_data),
                         "history": history_data[:20],
                     }
-
         except Exception as err:
             raise UpdateFailed(f"Error communicating with Oref API: {err}") from err

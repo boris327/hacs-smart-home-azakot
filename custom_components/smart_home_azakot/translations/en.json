@@ -1,0 +1,14 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Home Azakot — Israel Alerts",
+        "description": "Install Smart Home Azakot integration. No additional configuration needed. Data updates every 10 seconds.",
+        "data": {}
+      }
+    },
+    "abort": {
+      "already_configured": "Integration is already configured."
+    }
+  }
+}

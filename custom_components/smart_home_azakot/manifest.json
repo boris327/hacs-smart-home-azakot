@@ -1,7 +1,7 @@
 {
-  "domain": "oref_alert",
-  "name": "Oref Alert — פיקוד העורף",
-  "version": "1.0.0",
+  "domain": "smart_home_azakot",
+  "name": "Smart Home Azakot — אזעקות חכמות",
+  "version": "1.1.0",
   "documentation": "https://github.com/boris327/hacs-oref-alert",
   "issue_tracker": "https://github.com/boris327/hacs-oref-alert/issues",
   "requirements": [],

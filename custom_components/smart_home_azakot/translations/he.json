@@ -1,0 +1,14 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Home Azakot — אזעקות חכמות",
+        "description": "התקנת אינטגרציית Smart Home Azakot. לא נדרשת הגדרה נוספת. הנתונים מתעדכנים כל 10 שניות.",
+        "data": {}
+      }
+    },
+    "abort": {
+      "already_configured": "האינטגרציה כבר מותקנת."
+    }
+  }
+}
