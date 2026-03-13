@@ -1,176 +1,23 @@
 title: Smart Home Azakot
 views:
-  - title: 🚨 אזעקות ומפה
+  - title: 🚨 מפת אזעקות
     path: azakot-map
     icon: mdi:shield-alert
-    type: masonry
+    panel: true
     cards:
-
-      # ══════════════════════════════════════════
-      # 1. BANNER — סטטוס אזעקה ראשי
-      # ══════════════════════════════════════════
-      - type: markdown
-        content: >
-          {% set active = is_state('binary_sensor.azakot_active', 'on') %}
-          {% set zones = states('sensor.azakot_zones_count') | int(0) %}
-          {% set title = state_attr('sensor.azakot_status', 'title') | default('') %}
-          {% if active %}
-          <div style="display:flex;align-items:center;justify-content:space-between;direction:rtl;font-family:'Heebo',sans-serif;padding:4px 0;">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <ha-icon icon="mdi:alert-octagon" style="color:#ff2020;--mdc-icon-size:32px;"></ha-icon>
-              <span style="font-size:1.5em;font-weight:900;color:#ff3030;">&#128680; אזעקה פעילה!</span>
-            </div>
-            <div style="text-align:left;color:#ff9090;">
-              <div style="font-size:1em;font-weight:700;">{{ title }}</div>
-              <div style="font-size:0.8em;opacity:0.8;">{{ zones }} אזורים מוזהרים</div>
-            </div>
-          </div>
-          {% else %}
-          <div style="display:flex;align-items:center;gap:12px;direction:rtl;font-family:'Heebo',sans-serif;padding:4px 0;">
-            <ha-icon icon="mdi:shield-check" style="color:#00e676;--mdc-icon-size:28px;"></ha-icon>
-            <span style="font-size:1.3em;font-weight:800;color:#00e676;">&#10003; אין אזעקות פעילות</span>
-            <span style="margin-right:auto;font-size:0.82em;color:#40aa70;opacity:0.8;">{{ now().strftime('%H:%M:%S') }}</span>
-          </div>
-          {% endif %}
-        card_mod:
-          style: >
-            ha-card {
-              background: {% if is_state('binary_sensor.azakot_active', 'on') %}linear-gradient(135deg,#2d0808,#1a0505){% else %}linear-gradient(135deg,#041a0e,#07291a){% endif %} !important;
-              border: 2px solid {% if is_state('binary_sensor.azakot_active', 'on') %}rgba(255,60,60,0.8){% else %}rgba(0,200,100,0.4){% endif %} !important;
-              border-radius: 14px !important;
-              padding: 14px 20px !important;
-            }
-
-      # ══════════════════════════════════════════
-      # 2. קישורים לאתר פיקוד העורף
-      # ══════════════════════════════════════════
-      - type: markdown
-        content: |
-          <div style="direction:rtl;font-family:'Heebo',sans-serif;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-              <ha-icon icon="mdi:web" style="color:#8ab4ff;--mdc-icon-size:18px;"></ha-icon>
-              <span style="font-size:0.9em;font-weight:700;color:#8ab4ff;">קישורים לאתר פיקוד העורף</span>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-              <a href="https://www.oref.org.il/11226-he/Pakar.aspx" target="_blank" style="text-decoration:none;">
-                <div style="background:linear-gradient(135deg,#0d1525,#1a2540);border:1px solid rgba(100,150,255,0.4);border-radius:10px;padding:12px 8px;text-align:center;">
-                  <div style="font-size:1.6em;">&#128506;</div>
-                  <div style="font-size:0.78em;color:#8ab4ff;margin-top:4px;font-weight:600;">מפת אזעקות</div>
-                </div>
-              </a>
-              <a href="https://www.oref.org.il/11226-he/Pakar.aspx" target="_blank" style="text-decoration:none;">
-                <div style="background:linear-gradient(135deg,#1a0d25,#2a1540);border:1px solid rgba(200,100,255,0.4);border-radius:10px;padding:12px 8px;text-align:center;">
-                  <div style="font-size:1.6em;">&#128336;</div>
-                  <div style="font-size:0.78em;color:#c864ff;margin-top:4px;font-weight:600;">היסטוריה</div>
-                </div>
-              </a>
-              <a href="https://www.oref.org.il/1096-he/MabatLaAdam.aspx" target="_blank" style="text-decoration:none;">
-                <div style="background:linear-gradient(135deg,#1a0505,#2d0808);border:1px solid rgba(255,100,100,0.4);border-radius:10px;padding:12px 8px;text-align:center;">
-                  <div style="font-size:1.6em;">&#128241;</div>
-                  <div style="font-size:0.78em;color:#ff7070;margin-top:4px;font-weight:600;">אפליקציה</div>
-                </div>
-              </a>
-            </div>
-          </div>
+      - type: iframe
+        url: /local/smart-home-azakot.html
+        aspect_ratio: "100%"
         card_mod:
           style: |
             ha-card {
-              background: linear-gradient(135deg, #0a0f1e, #0d1420) !important;
-              border: 1px solid rgba(100,150,255,0.2) !important;
-              border-radius: 12px !important;
-              padding: 14px 16px !important;
+              height: calc(100vh - 56px) !important;
+              border: none !important;
+              border-radius: 0 !important;
+              box-shadow: none !important;
+              margin: 0 !important;
             }
-
-      # ══════════════════════════════════════════
-      # 3. ZONES — אזורים מוזהרים
-      # ══════════════════════════════════════════
-      - type: markdown
-        content: >
-          {% set active = is_state('binary_sensor.azakot_active', 'on') %}
-          {% set areas = state_attr('sensor.azakot_status', 'areas') %}
-          {% set category = states('sensor.azakot_category') %}
-          {% set desc = state_attr('sensor.azakot_status', 'desc') %}
-
-          <div style="direction:rtl;font-family:'Heebo',sans-serif;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(200,100,255,0.2);">
-            <ha-icon icon="mdi:map-marker-alert" style="color:#c864ff;--mdc-icon-size:20px;"></ha-icon>
-            <span style="font-size:0.95em;font-weight:700;color:#c864ff;">אזורים מוזהרים עכשיו</span>
-            <span style="margin-right:auto;background:rgba(200,100,255,0.15);border:1px solid rgba(200,100,255,0.4);border-radius:20px;padding:2px 10px;font-size:0.75em;color:#c864ff;">
-              {{ states('sensor.azakot_zones_count') | default('0') }} אזורים
-            </span>
-          </div>
-          {% if active and areas and areas | length > 0 %}
-            {% if category and category not in ['לא ידוע', '—'] %}
-            <div style="margin-bottom:10px;padding:8px 12px;background:rgba(255,50,50,0.1);border-radius:8px;border-right:3px solid #ff3030;">
-              <div style="font-size:0.75em;color:#ff7070;font-weight:600;">סוג אירוע</div>
-              <div style="font-size:0.9em;color:#ffaaaa;margin-top:2px;">{{ category }}</div>
-            </div>
-            {% endif %}
-            {% if desc %}
-            <div style="margin-bottom:10px;padding:8px 12px;background:rgba(255,120,0,0.1);border-radius:8px;border-right:3px solid #ff8c00;">
-              <div style="font-size:0.75em;color:#ffaa40;font-weight:600;">הנחיות</div>
-              <div style="font-size:0.82em;color:#ffcc80;margin-top:2px;line-height:1.5;">{{ desc }}</div>
-            </div>
-            {% endif %}
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px;">
-            {% for area in areas %}
-            <div style="background:rgba(255,40,40,0.12);border:1px solid rgba(255,60,60,0.35);border-radius:7px;padding:7px 10px;font-size:0.85em;color:#ffaaaa;">
-              &#128205; {{ area }}
-            </div>
-            {% endfor %}
-            </div>
-          {% else %}
-          <div style="text-align:center;padding:24px;color:#00e676;">
-            <div style="font-size:2.5em;margin-bottom:8px;">&#128737;</div>
-            <div style="font-weight:700;font-size:1.05em;">האזור שקט</div>
-            <div style="font-size:0.8em;opacity:0.6;margin-top:5px;">אין אזעקות פעילות כרגע</div>
-          </div>
-          {% endif %}
-          </div>
-        card_mod:
-          style: |
-            ha-card {
-              background: linear-gradient(135deg, #0d0d1f, #0a1020) !important;
-              border: 1px solid rgba(200,100,255,0.25) !important;
-              border-radius: 12px !important;
-              padding: 14px 18px !important;
+            iframe {
+              height: 100% !important;
+              border: none !important;
             }
-
-      # ══════════════════════════════════════════
-      # 4. STATS
-      # ══════════════════════════════════════════
-      - type: horizontal-stack
-        cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.azakot_zones_count
-            name: אזורים מוזהרים
-            icon: mdi:map-marker-multiple
-            card_mod:
-              style: |
-                ha-card {
-                  background: linear-gradient(135deg,#0f1525,#151e35) !important;
-                  border: 1px solid rgba(100,150,255,0.2) !important;
-                  direction: rtl;
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.azakot_history_count
-            name: אזעקות 24 שעות
-            icon: mdi:history
-            card_mod:
-              style: |
-                ha-card {
-                  background: linear-gradient(135deg,#151020,#1e1530) !important;
-                  border: 1px solid rgba(200,150,255,0.2) !important;
-                  direction: rtl;
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.azakot_category
-            name: סוג אירוע
-            icon: mdi:shield-alert
-            card_mod:
-              style: |
-                ha-card {
-                  background: linear-gradient(135deg,#150a0a,#251010) !important;
-                  border: 1px solid rgba(255,100,100,0.2) !important;
-                  direction: rtl;
-                }
