@@ -7,333 +7,439 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --red:#ff2828;--red-dim:rgba(255,40,40,0.15);--red-glow:rgba(255,40,40,0.5);
-  --green:#00e676;--green-dim:rgba(0,230,118,0.12);
-  --bg:#060a14;--surface:rgba(10,18,38,0.96);--surface2:rgba(14,22,45,0.92);
-  --border:rgba(255,255,255,0.07);--border-blue:rgba(61,126,255,0.25);
-  --text:#dce8ff;--text-dim:rgba(220,232,255,0.4);
-  --accent:#3d7eff;--accent2:#7b61ff;
-  --font:system-ui,-apple-system,'Segoe UI',sans-serif;
+  --red:#ff3030;--red-dim:rgba(255,48,48,0.12);--red-glow:rgba(255,48,48,0.4);
+  --green:#00e676;--green-dim:rgba(0,230,118,0.1);
+  --bg:#05090f;--s1:rgba(9,16,32,0.97);--s2:rgba(12,22,44,0.95);
+  --b:rgba(255,255,255,0.065);--bb:rgba(61,126,255,0.2);
+  --tx:#ccdaff;--tx2:rgba(204,218,255,0.38);
+  --ac:#3d7eff;--ac2:#8b5cf6;
+  --fn:system-ui,-apple-system,sans-serif;
 }
-html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:var(--font);overflow:hidden;user-select:none}
-#app{display:grid;grid-template-rows:58px 1fr 40px;grid-template-columns:1fr 300px;height:100vh}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--tx);font-family:var(--fn);overflow:hidden}
+#app{display:grid;grid-template-rows:56px 1fr 38px;grid-template-columns:1fr 300px;height:100vh}
+
 /* HEADER */
-#header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 20px;
-  background:linear-gradient(180deg,rgba(4,8,18,.99),rgba(6,10,20,.93));
-  border-bottom:1px solid var(--border);backdrop-filter:blur(20px);z-index:100}
-#logo{display:flex;align-items:center;gap:12px}
-.logo-shield{width:34px;height:34px;background:linear-gradient(145deg,#0f2a5e,#071840);border:1px solid rgba(61,126,255,.5);
-  border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 15px rgba(61,126,255,.2)}
-.logo-title{font-size:.95em;font-weight:700;color:#a8c8ff;letter-spacing:.3px}
-.logo-sub{font-size:.68em;color:var(--text-dim);margin-top:1px}
-#status-badge{display:flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;
-  font-size:.85em;font-weight:700;transition:all .4s;
-  border:1px solid rgba(0,230,118,.3);background:rgba(0,230,118,.08);color:var(--green)}
-#status-badge.alert{border-color:rgba(255,40,40,.5);background:rgba(255,40,40,.12);color:var(--red);animation:badge-pulse 1.2s ease-in-out infinite}
-@keyframes badge-pulse{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 6px rgba(255,40,40,.15)}}
-#status-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
-#status-badge.alert #status-dot{animation:blink .7s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
-#header-time{font-size:.8em;color:var(--text-dim);font-variant-numeric:tabular-nums;letter-spacing:1.5px;font-weight:500}
-/* MAP */
-#map-area{position:relative;background:radial-gradient(ellipse at 40% 40%,#080f22,#040810);
+#hd{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+  background:linear-gradient(180deg,rgba(3,6,15,.99),rgba(5,9,20,.92));border-bottom:1px solid var(--b);z-index:100}
+#logo{display:flex;align-items:center;gap:10px}
+.ls{width:32px;height:32px;background:linear-gradient(145deg,#0e265a,#060f2e);
+  border:1px solid rgba(61,126,255,.45);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.lt{font-size:.92em;font-weight:700;color:#9ec4ff;letter-spacing:.2px}
+.lx{font-size:.66em;color:var(--tx2);margin-top:1px}
+#sb{display:flex;align-items:center;gap:7px;padding:5px 14px;border-radius:100px;
+  font-size:.82em;font-weight:700;transition:all .35s;
+  border:1px solid rgba(0,230,118,.28);background:rgba(0,230,118,.07);color:var(--green)}
+#sb.alert{border-color:rgba(255,48,48,.5);background:rgba(255,48,48,.1);color:var(--red);animation:bp 1.2s ease-in-out infinite}
+@keyframes bp{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 5px rgba(255,48,48,.18)}}
+#sd{width:7px;height:7px;border-radius:50%;background:currentColor}
+#sb.alert #sd{animation:bk .7s ease-in-out infinite}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.08}}
+#ht{font-size:.78em;color:var(--tx2);font-variant-numeric:tabular-nums;letter-spacing:1.4px}
+
+/* MAP AREA */
+#ma{position:relative;background:radial-gradient(ellipse at 36% 36%,#070d1e,#030608);
   overflow:hidden;display:flex;align-items:center;justify-content:center}
-#map-area::before{content:'';position:absolute;inset:0;
-  background-image:linear-gradient(rgba(61,126,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(61,126,255,.04) 1px,transparent 1px);
-  background-size:40px 40px;pointer-events:none}
-#scan-line{position:absolute;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,rgba(61,126,255,.4),transparent);
-  animation:scan 6s linear infinite;pointer-events:none;z-index:2;box-shadow:0 0 20px rgba(61,126,255,.3)}
-@keyframes scan{0%{top:-2px}100%{top:100%}}
-#map-svg-wrapper{position:relative;z-index:3;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-#israel-map{height:calc(100vh - 98px);width:auto;max-height:100%;filter:drop-shadow(0 0 30px rgba(61,126,255,.15))}
-.map-label{font-size:10px;font-weight:600;fill:rgba(180,210,255,.5);text-anchor:middle;font-family:var(--font);pointer-events:none}
-.corner{position:absolute;width:16px;height:16px;z-index:10;opacity:.4}
-.corner.tl{top:10px;left:10px;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
-.corner.tr{top:10px;right:10px;border-top:2px solid var(--accent);border-right:2px solid var(--accent)}
-.corner.bl{bottom:10px;left:10px;border-bottom:2px solid var(--accent);border-left:2px solid var(--accent)}
-.corner.br{bottom:10px;right:10px;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+#ma::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(61,126,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(61,126,255,.03) 1px,transparent 1px);
+  background-size:42px 42px}
+#sc{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(61,126,255,.3),transparent);
+  animation:scan 8s linear infinite;pointer-events:none;z-index:2}
+@keyframes scan{0%{top:-1px}100%{top:100%}}
+#sw{position:relative;z-index:3;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+#im{height:calc(100vh - 94px);width:auto;max-height:100%}
+.ml{font-size:9px;font-weight:600;fill:rgba(170,200,255,.42);text-anchor:middle;font-family:var(--fn)}
+.c0{position:absolute;width:14px;height:14px;z-index:10;opacity:.3}
+.c0.tl{top:9px;left:9px;border-top:1.5px solid var(--ac);border-left:1.5px solid var(--ac)}
+.c0.tr{top:9px;right:9px;border-top:1.5px solid var(--ac);border-right:1.5px solid var(--ac)}
+.c0.bl{bottom:9px;left:9px;border-bottom:1.5px solid var(--ac);border-left:1.5px solid var(--ac)}
+.c0.br{bottom:9px;right:9px;border-bottom:1.5px solid var(--ac);border-right:1.5px solid var(--ac)}
+
+/* Tooltip on map */
+#mtt{position:absolute;z-index:20;background:rgba(8,14,30,.96);border:1px solid rgba(255,48,48,.4);
+  border-radius:8px;padding:7px 12px;font-size:.76em;color:#ffcccc;pointer-events:none;
+  white-space:nowrap;display:none;backdrop-filter:blur(10px)}
+
 /* PANEL */
-#panel{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
-.panel-section{padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.section-title{font-size:.65em;font-weight:700;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;
-  display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.section-title::before{content:'';width:2px;height:12px;border-radius:1px;background:var(--accent);flex-shrink:0}
-#alert-type{font-size:1.25em;font-weight:900;color:var(--green);line-height:1.2}
-#alert-type.active{color:var(--red)}
-#alert-hint{font-size:.78em;color:var(--text-dim);margin-top:8px;line-height:1.6;
-  padding-top:8px;border-top:1px solid var(--border);display:none}
-#zones-scroll{overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
-#zones-list{padding:10px 16px;display:flex;flex-direction:column;gap:5px}
-.zone-row{display:flex;align-items:center;gap:8px;padding:8px 10px;
-  background:rgba(255,40,40,.07);border:1px solid rgba(255,50,50,.2);
-  border-radius:8px;font-size:.84em;color:#ffbbbb;animation:slide-in .25s ease}
-@keyframes slide-in{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
-.zone-pip{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 6px var(--red);flex-shrink:0;animation:blink .8s ease-in-out infinite}
-.no-alerts{text-align:center;padding:28px 16px;color:var(--green)}
-.no-alerts .big{font-size:2.2em;margin-bottom:8px}
-.no-alerts .msg{font-size:.88em;font-weight:600}
-.no-alerts .sub{font-size:.73em;color:var(--text-dim);margin-top:4px}
-#stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
-.stat-val{font-size:1.8em;font-weight:900;color:var(--accent);line-height:1}
-.stat-val.red{color:var(--red)}
-.stat-lbl{font-size:.67em;color:var(--text-dim);margin-top:3px}
-#links-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
-.link-tile{display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 4px;
-  background:rgba(61,126,255,.06);border:1px solid rgba(61,126,255,.15);border-radius:10px;
-  text-decoration:none;cursor:pointer;transition:all .18s;color:var(--text)}
-.link-tile:hover{background:rgba(61,126,255,.14);border-color:rgba(61,126,255,.35);transform:translateY(-1px)}
-.link-tile .ti{font-size:1.3em}
-.link-tile .tl{font-size:.63em;font-weight:600;color:#8ab4ff;text-align:center}
-#history-section{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}
-#history-scroll{overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;padding:8px 12px}
-.hist-row{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;
-  border-radius:6px;font-size:.76em;border-bottom:1px solid rgba(255,255,255,.04)}
-.hist-row:hover{background:rgba(255,255,255,.03)}
-.hist-time{color:var(--text-dim);font-variant-numeric:tabular-nums}
-.hist-area{color:var(--text);font-weight:500;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#pn{background:var(--s1);border-right:1px solid var(--b);display:flex;flex-direction:column;overflow:hidden}
+.ps{padding:12px 15px;border-bottom:1px solid var(--b);flex-shrink:0}
+.pt{font-size:.62em;font-weight:700;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;margin-bottom:9px}
+.pt::before{content:'';width:2px;height:11px;border-radius:1px;background:var(--ac);flex-shrink:0}
+.pt.red::before{background:var(--red)}
+#at{font-size:1.2em;font-weight:900;color:var(--green);line-height:1.25;letter-spacing:-.2px}
+#at.active{color:var(--red)}
+#ah{font-size:.76em;color:var(--tx2);margin-top:7px;line-height:1.6;padding-top:7px;border-top:1px solid var(--b);display:none}
+#zsc{overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.06) transparent}
+#zl{padding:8px 14px;display:flex;flex-direction:column;gap:4px}
+.zr{display:flex;align-items:center;gap:7px;padding:7px 9px;
+  background:rgba(255,40,40,.065);border:1px solid rgba(255,50,50,.18);
+  border-radius:7px;font-size:.82em;color:#ffb8b8;cursor:pointer;transition:background .15s}
+.zr:hover{background:rgba(255,40,40,.12)}
+.zp{width:5px;height:5px;border-radius:50%;background:var(--red);box-shadow:0 0 5px var(--red);flex-shrink:0;animation:bk .85s ease-in-out infinite}
+.na{text-align:center;padding:24px 10px;color:var(--green)}
+.na .bi{font-size:1.9em;margin-bottom:7px}
+.na .bm{font-size:.85em;font-weight:600}
+.na .bs{font-size:.71em;color:var(--tx2);margin-top:3px}
+#sg{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:10px 14px;border-bottom:1px solid var(--b);flex-shrink:0}
+.sb2{background:var(--s2);border:1px solid var(--b);border-radius:9px;padding:9px 11px}
+.sv{font-size:1.65em;font-weight:900;color:var(--ac);line-height:1}
+.sv.r{color:var(--red)}.sv.p{color:var(--ac2)}
+.sl{font-size:.65em;color:var(--tx2);margin-top:2px}
+#lk{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;padding:8px 10px;border-bottom:1px solid var(--b);flex-shrink:0}
+.lt2{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 3px;
+  background:rgba(61,126,255,.055);border:1px solid rgba(61,126,255,.12);border-radius:9px;
+  text-decoration:none;cursor:pointer;transition:all .16s;color:var(--tx)}
+.lt2:hover{background:rgba(61,126,255,.13);border-color:rgba(61,126,255,.32);transform:translateY(-1px)}
+.lt2 .ti{font-size:1.25em}.lt2 .tl{font-size:.6em;font-weight:600;color:#7aafff;text-align:center}
+#hs{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+#hsc{overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.06) transparent;padding:6px 10px}
+.hr{display:flex;justify-content:space-between;align-items:center;padding:5px 7px;
+  border-radius:5px;font-size:.73em;border-bottom:1px solid rgba(255,255,255,.035)}
+.hr:hover{background:rgba(255,255,255,.025)}.ht2{color:var(--tx2);font-variant-numeric:tabular-nums}
+.ha{color:var(--tx);font-weight:500;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb{font-size:.6em;padding:1px 5px;border-radius:3px;background:rgba(255,48,48,.12);color:#ff8888;flex-shrink:0}
+
 /* BOTTOM */
-#bottom{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;background:rgba(4,8,18,.98);border-top:1px solid var(--border);
-  font-size:.69em;color:var(--text-dim)}
-#pulse-wrap{display:flex;align-items:center;gap:6px}
-#live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:live-glow 2s ease-in-out infinite}
-@keyframes live-glow{0%,100%{opacity:1;box-shadow:0 0 4px var(--green)}50%{opacity:.3;box-shadow:none}}
+#bt{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;background:rgba(3,6,15,.99);border-top:1px solid var(--b);
+  font-size:.67em;color:var(--tx2)}
+#ld{display:flex;align-items:center;gap:5px}
+#ldot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:lg 2s ease-in-out infinite}
+@keyframes lg{0%,100%{opacity:1;box-shadow:0 0 4px var(--green)}50%{opacity:.28;box-shadow:none}}
+#src{color:rgba(61,126,255,.5);font-size:.9em}
+
 /* LOADING */
 #loading{position:fixed;inset:0;background:var(--bg);z-index:9999;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .6s}
-.ld-icon{font-size:2.8em}
-.ld-title{font-size:1.1em;font-weight:700;color:#8ab4ff}
-.ld-spinner{width:36px;height:36px;border:3px solid rgba(61,126,255,.15);border-top-color:var(--accent);border-radius:50%;animation:spin .75s linear infinite}
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .55s}
+.li{font-size:2.5em}.ln{font-size:1.05em;font-weight:700;color:#8ab4ff}
+.ls2{width:32px;height:32px;border:2.5px solid rgba(61,126,255,.14);
+  border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.le{font-size:.78em;color:#ff6060;max-width:240px;text-align:center;display:none}
 </style>
 </head>
 <body>
 <div id="loading">
-  <div class="ld-icon">🛡️</div>
-  <div class="ld-title">Smart Home Azakot</div>
-  <div class="ld-spinner"></div>
+  <div class="li">🛡️</div>
+  <div class="ln">Smart Home Azakot</div>
+  <div class="ls2"></div>
+  <div class="le" id="le"></div>
 </div>
+
 <div id="app">
-  <header id="header">
+  <header id="hd">
     <div id="logo">
-      <div class="logo-shield">🛡️</div>
-      <div>
-        <div class="logo-title">Smart Home Azakot</div>
-        <div class="logo-sub">מערכת מעקב אזעקות — פיקוד העורף</div>
-      </div>
+      <div class="ls">🛡️</div>
+      <div><div class="lt">Smart Home Azakot</div><div class="lx">מעקב אזעקות — פיקוד העורף</div></div>
     </div>
-    <div id="status-badge"><div id="status-dot"></div><span id="status-text">מאתחל...</span></div>
-    <div id="header-time">--:--:--</div>
+    <div id="sb"><div id="sd"></div><span id="st">מאתחל...</span></div>
+    <div id="ht">--:--:--</div>
   </header>
 
-  <main id="map-area">
-    <div class="corner tl"></div><div class="corner tr"></div>
-    <div class="corner bl"></div><div class="corner br"></div>
-    <div id="scan-line"></div>
-    <div id="map-svg-wrapper">
-      <svg id="israel-map" viewBox="0 0 300 620" xmlns="http://www.w3.org/2000/svg">
+  <main id="ma">
+    <div class="c0 tl"></div><div class="c0 tr"></div>
+    <div class="c0 bl"></div><div class="c0 br"></div>
+    <div id="sc"></div>
+    <div id="mtt" id="mtt"></div>
+    <div id="sw">
+      <svg id="im" viewBox="0 0 300 620" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <filter id="glow2"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <radialGradient id="bg-g" cx="50%" cy="40%" r="60%">
-            <stop offset="0%" stop-color="#0d2048" stop-opacity=".6"/>
-            <stop offset="100%" stop-color="#040810" stop-opacity=".1"/>
+          <filter id="g1"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="g2"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <radialGradient id="bg" cx="50%" cy="38%" r="58%">
+            <stop offset="0%" stop-color="#0b1d48" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#030608" stop-opacity=".08"/>
           </radialGradient>
-          <linearGradient id="border-g" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#3d7eff" stop-opacity=".8"/>
-            <stop offset="100%" stop-color="#7b61ff" stop-opacity=".4"/>
+          <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3d7eff" stop-opacity=".75"/>
+            <stop offset="100%" stop-color="#6b21a8" stop-opacity=".38"/>
           </linearGradient>
-          <style>
-            @keyframes zp{0%{r:8;opacity:.9}100%{r:30;opacity:0}}
-          </style>
+          <style>@keyframes zp{0%{r:7;opacity:.85}100%{r:28;opacity:0}}</style>
         </defs>
-        <rect width="300" height="620" fill="url(#bg-g)" rx="4"/>
-        <!-- Israel outline (approximate) -->
-        <polygon points="
-          158,20 168,26 180,36 186,50 188,65 192,80 196,95 196,110 190,122
-          183,132 186,144 192,158 194,172 190,186 184,200 178,215 172,230
-          166,245 162,260 159,275 157,290 155,305 153,320 150,336 146,350
-          142,364 138,378 134,392 130,406 126,418 122,430 118,442 114,452
-          110,462 107,472 104,480 108,490 116,494 122,486 128,476 132,482
-          136,490 130,498 126,505 130,512 106,522 98,530 96,538 100,548
-          106,554 114,558 122,554 128,546 134,540 140,548 136,558 130,564
-          134,572 142,576 150,570 156,562 162,572 158,580 166,584 174,578
-          180,568 186,558 192,552 198,560 193,570 190,580 197,584 204,577
-          208,566 212,554 214,542 212,530 208,520 212,508 218,500 222,510
-          220,522 218,534 224,540 230,533 230,520 226,508 222,498 218,486
-          220,474 226,464 232,452 234,440 231,428 226,416 220,403 213,390
-          207,377 201,363 195,349 190,335 187,320 185,305 183,290 182,274
-          180,258 178,242 177,226 178,210 182,195 186,180 188,165 186,150
-          180,138 174,126 170,114 170,100 172,86 174,72 172,58 168,46 162,34"
-          fill="rgba(20,45,90,.55)" stroke="url(#border-g)" stroke-width="1.5"
-          stroke-linejoin="round" filter="url(#glow)"/>
-        <!-- City dots -->
-        <circle cx="153" cy="252" r="3" fill="#3d7eff" opacity=".8" filter="url(#glow)"/>
-        <text x="134" y="249" class="map-label">ת"א</text>
-        <circle cx="176" cy="272" r="3" fill="#7b61ff" opacity=".8" filter="url(#glow)"/>
-        <text x="194" y="276" class="map-label">י-ם</text>
-        <circle cx="164" cy="150" r="3" fill="#3d7eff" opacity=".7" filter="url(#glow)"/>
-        <text x="147" y="147" class="map-label">חיפה</text>
-        <circle cx="148" cy="392" r="3" fill="#3d7eff" opacity=".7" filter="url(#glow)"/>
-        <text x="127" y="397" class="map-label">ב"ש</text>
-        <circle cx="156" cy="562" r="3" fill="#3d7eff" opacity=".6" filter="url(#glow)"/>
-        <text x="140" y="558" class="map-label">אילת</text>
-        <circle cx="176" cy="44" r="2.5" fill="#3d7eff" opacity=".6"/>
-        <text x="190" y="48" class="map-label" font-size="8">ק.שמונה</text>
-        <!-- Alert markers (populated by JS) -->
+        <rect width="300" height="620" fill="url(#bg)" rx="3"/>
+        <!-- Israel outline -->
+        <polygon
+          points="158,20 168,26 180,36 186,50 188,65 192,80 196,95 196,110 190,122 183,132 186,144 192,158 194,172 190,186 184,200 178,215 172,230 166,245 162,260 159,275 157,290 155,305 153,320 150,336 146,350 142,364 138,378 134,392 130,406 126,418 122,430 118,442 114,452 110,462 107,472 104,480 108,490 116,494 122,486 128,476 132,482 136,490 130,498 126,505 130,512 106,522 98,530 96,538 100,548 106,554 114,558 122,554 128,546 134,540 140,548 136,558 130,564 134,572 142,576 150,570 156,562 162,572 158,580 166,584 174,578 180,568 186,558 192,552 198,560 193,570 190,580 197,584 204,577 208,566 212,554 214,542 212,530 208,520 212,508 218,500 222,510 220,522 218,534 224,540 230,533 230,520 226,508 222,498 218,486 220,474 226,464 232,452 234,440 231,428 226,416 220,403 213,390 207,377 201,363 195,349 190,335 187,320 185,305 183,290 182,274 180,258 178,242 177,226 178,210 182,195 186,180 188,165 186,150 180,138 174,126 170,114 170,100 172,86 174,72 172,58 168,46 162,34"
+          fill="rgba(20,45,88,.52)" stroke="url(#bg2)" stroke-width="1.4" stroke-linejoin="round" filter="url(#g1)"/>
+        <!-- Cities -->
+        <circle cx="153" cy="252" r="2.5" fill="#3d7eff" opacity=".8" filter="url(#g1)"/>
+        <text x="133" y="249" class="ml">ת"א</text>
+        <circle cx="176" cy="272" r="2.5" fill="#7b61ff" opacity=".8" filter="url(#g1)"/>
+        <text x="193" y="276" class="ml">י-ם</text>
+        <circle cx="164" cy="150" r="2.5" fill="#3d7eff" opacity=".7" filter="url(#g1)"/>
+        <text x="147" y="147" class="ml">חיפה</text>
+        <circle cx="148" cy="392" r="2.5" fill="#3d7eff" opacity=".65" filter="url(#g1)"/>
+        <text x="128" y="397" class="ml">ב"ש</text>
+        <circle cx="156" cy="562" r="2.5" fill="#3d7eff" opacity=".55"/>
+        <text x="140" y="558" class="ml">אילת</text>
+        <circle cx="176" cy="44" r="2" fill="#3d7eff" opacity=".55"/>
+        <text x="190" y="48" class="ml" font-size="8">ק.שמונה</text>
+        <!-- Alert markers layer -->
         <g id="aml"></g>
-        <!-- North + scale -->
-        <text x="262" y="38" font-size="11" fill="rgba(61,126,255,.5)" font-weight="700" text-anchor="middle" font-family="system-ui">N</text>
-        <text x="262" y="27" font-size="15" text-anchor="middle" fill="rgba(61,126,255,.5)">↑</text>
-        <line x1="25" y1="595" x2="75" y2="595" stroke="rgba(61,126,255,.4)" stroke-width="1.5"/>
-        <line x1="25" y1="591" x2="25" y2="599" stroke="rgba(61,126,255,.4)" stroke-width="1.5"/>
-        <line x1="75" y1="591" x2="75" y2="599" stroke="rgba(61,126,255,.4)" stroke-width="1.5"/>
-        <text x="50" y="610" font-size="8" fill="rgba(100,150,255,.4)" text-anchor="middle" font-family="system-ui">100 ק"מ</text>
-        <text x="45" y="210" class="map-label" font-size="8" fill="rgba(100,160,255,.25)">ים תיכון</text>
+        <!-- N + scale -->
+        <text x="262" y="36" font-size="10" fill="rgba(61,126,255,.45)" font-weight="700" text-anchor="middle" font-family="system-ui">N</text>
+        <text x="262" y="25" font-size="14" text-anchor="middle" fill="rgba(61,126,255,.4)">↑</text>
+        <line x1="22" y1="596" x2="72" y2="596" stroke="rgba(61,126,255,.35)" stroke-width="1.2"/>
+        <line x1="22" y1="592" x2="22" y2="600" stroke="rgba(61,126,255,.35)" stroke-width="1.2"/>
+        <line x1="72" y1="592" x2="72" y2="600" stroke="rgba(61,126,255,.35)" stroke-width="1.2"/>
+        <text x="47" y="610" font-size="7.5" fill="rgba(100,150,255,.38)" text-anchor="middle" font-family="system-ui">100 ק"מ</text>
+        <text x="44" y="215" class="ml" font-size="7.5" fill="rgba(80,140,255,.2)">ים תיכון</text>
       </svg>
     </div>
   </main>
 
-  <aside id="panel">
-    <div class="panel-section">
-      <div class="section-title">סטטוס אזעקה</div>
-      <div id="alert-type">✅ אין אזעקה פעילה</div>
-      <div id="alert-hint"></div>
+  <aside id="pn">
+    <div class="ps">
+      <div class="pt">סטטוס אזעקה</div>
+      <div id="at">✅ אין אזעקה פעילה</div>
+      <div id="ah"></div>
     </div>
-    <div id="stats-grid">
-      <div class="stat-box"><div class="stat-val" id="stat-zones">0</div><div class="stat-lbl">אזורים מוזהרים</div></div>
-      <div class="stat-box"><div class="stat-val" id="stat-hist" style="color:var(--accent2)">—</div><div class="stat-lbl">אזעקות 24 שע׳</div></div>
+    <div id="sg">
+      <div class="sb2"><div class="sv r" id="sv1">0</div><div class="sl">אזורים פעילים</div></div>
+      <div class="sb2"><div class="sv p" id="sv2">—</div><div class="sl">אזעקות 24 שע׳</div></div>
     </div>
-    <div id="links-row">
-      <a class="link-tile" href="https://www.oref.org.il/11226-he/Pakar.aspx" target="_blank"><span class="ti">🗺️</span><span class="tl">מפת אזעקות</span></a>
-      <a class="link-tile" href="https://www.oref.org.il" target="_blank"><span class="ti">🌐</span><span class="tl">פיקוד העורף</span></a>
-      <a class="link-tile" href="https://www.oref.org.il/1096-he/MabatLaAdam.aspx" target="_blank"><span class="ti">📱</span><span class="tl">אפליקציה</span></a>
+    <div id="lk">
+      <a class="lt2" href="https://www.oref.org.il/11226-he/Pakar.aspx" target="_blank"><span class="ti">🗺️</span><span class="tl">מפת oref</span></a>
+      <a class="lt2" href="https://www.tzevaadom.co.il/historical" target="_blank"><span class="ti">📊</span><span class="tl">צופר — היסטוריה</span></a>
+      <a class="lt2" href="https://oct7database.com/heatmap_by_time.html" target="_blank"><span class="ti">🌡️</span><span class="tl">מפת חום</span></a>
     </div>
-    <div style="padding:10px 16px 4px;flex-shrink:0;display:flex;align-items:center;gap:8px;">
-      <span style="width:2px;height:12px;border-radius:1px;background:var(--red);display:inline-block;"></span>
-      <span style="font-size:.65em;font-weight:700;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;">אזורים מוזהרים</span>
-      <span id="zones-count" style="margin-right:auto;background:rgba(255,255,255,.05);border-radius:20px;padding:1px 8px;font-size:.68em;color:var(--text-dim);">0</span>
+    <div style="padding:8px 15px 3px;flex-shrink:0;display:flex;align-items:center;gap:6px;">
+      <span style="width:2px;height:11px;border-radius:1px;background:var(--red);display:inline-block;"></span>
+      <span style="font-size:.62em;font-weight:700;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;">אזורים מוזהרים</span>
+      <span id="zc" style="margin-right:auto;background:rgba(255,255,255,.045);border-radius:20px;padding:1px 7px;font-size:.67em;color:var(--tx2);">0</span>
     </div>
-    <div id="zones-scroll">
-      <div id="zones-list">
-        <div class="no-alerts"><div class="big">🛡️</div><div class="msg">האזור שקט</div><div class="sub">אין אזעקות פעילות כרגע</div></div>
+    <div id="zsc"><div id="zl">
+      <div class="na"><div class="bi">🛡️</div><div class="bm">האזור שקט</div><div class="bs">אין אזעקות פעילות כרגע</div></div>
+    </div></div>
+    <div id="hs">
+      <div style="padding:8px 15px 3px;flex-shrink:0;display:flex;align-items:center;gap:6px;">
+        <span style="width:2px;height:11px;border-radius:1px;background:var(--ac2);display:inline-block;"></span>
+        <span style="font-size:.62em;font-weight:700;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;">היסטוריה</span>
+        <span id="src" style="margin-right:auto;font-size:.6em;color:rgba(61,126,255,.45);">api.tzevaadom.co.il</span>
       </div>
-    </div>
-    <div id="history-section">
-      <div style="padding:10px 16px 4px;flex-shrink:0;display:flex;align-items:center;gap:8px;">
-        <span style="width:2px;height:12px;border-radius:1px;background:var(--accent2);display:inline-block;"></span>
-        <span style="font-size:.65em;font-weight:700;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;">היסטוריה</span>
-      </div>
-      <div id="history-scroll"><div style="text-align:center;padding:16px;color:var(--text-dim);font-size:.78em;">טוען...</div></div>
+      <div id="hsc"><div style="text-align:center;padding:14px;color:var(--tx2);font-size:.76em;">טוען...</div></div>
     </div>
   </aside>
 
-  <div id="bottom">
-    <div id="pulse-wrap"><div id="live-dot"></div><span>Live • מתעדכן כל 10 שניות</span></div>
-    <span id="last-update">מאתחל...</span>
+  <div id="bt">
+    <div id="ld"><div id="ldot"></div><span>Live · api.tzevaadom.co.il · poll 10s</span></div>
+    <span id="lu">מאתחל...</span>
     <span>Smart Home Azakot</span>
   </div>
 </div>
 
 <script>
-var ALERT_URL='https://www.oref.org.il/WarningMessages/alert/alerts.json';
-var HISTORY_URL='https://www.oref.org.il/Shared/Ajax/GetAlarmsHistory.aspx?lang=he&mode=1';
-var HDRS={'Referer':'https://www.oref.org.il/','X-Requested-With':'XMLHttpRequest'};
-var CAT={'1':'ירי רקטות וטילים 🚀','2':'רעידת אדמה 🌍','3':'חדירת כלי טיס עוין ✈️','4':'חומרים מסוכנים ☣️','6':'גל צונאמי 🌊','13':'חדירת מחבלים ⚠️'};
-var ZONES={'תל אביב':[153,252],'גוש דן':[150,256],'רמת גן':[157,250],'בני ברק':[157,247],'חולון':[147,260],'ראשון לציון':[145,265],'ירושלים':[176,272],'מודיעין':[163,270],'לוד':[157,264],'חיפה':[164,150],'קריית שמונה':[176,44],'נהריה':[160,97],'עכו':[162,110],'נצרת':[172,167],'טבריה':[190,157],'צפת':[188,90],'כרמיאל':[175,130],'עפולה':[176,174],'נתניה':[150,220],'הרצליה':[150,234],'כפר סבא':[157,224],'אשדוד':[140,292],'אשקלון':[134,307],'שדרות':[130,320],'נתיבות':[132,327],'אופקים':[134,337],'באר שבע':[150,390],'אילת':[156,560],'עוטף עזה':[128,312],'לכיש':[140,300],'שרון':[148,230],'נגב':[150,422],'ערבה':[172,482],'גליל עליון':[182,74],'גליל תחתון':[180,164],'כנרת':[187,164],'גולן':[198,150]};
+var API = 'https://api.tzevaadom.co.il/alerts-history';
+var ACTIVE_SECS = 120; // if latest alert < 2 min ago → treat as active
+
+// City name → approximate SVG coords on our 300x620 map
+var CITIES = {
+  'תל אביב':      [153,252],'גוש דן':        [150,256],'רמת גן':       [157,249],
+  'בני ברק':      [157,246],'חולון':         [146,260],'ראשון לציון':  [144,265],
+  'בת ים':        [144,262],'גבעתיים':        [156,252],'פתח תקווה':   [160,248],
+  'ירושלים':     [176,272],'מודיעין':        [162,270],'לוד':          [156,264],
+  'רמלה':         [152,266],'יהוד':           [158,258],'אור יהודה':   [156,260],
+  'ריינה':        [170,164],'כפר סבא':        [158,223],'הרצליה':      [149,232],
+  'נתניה':        [148,220],'רעננה':          [150,228],'הוד השרון':   [152,225],
+  'חיפה':        [164,150],'קריית שמונה':    [176,44], 'נהריה':        [160,97],
+  'עכו':          [162,110],'נצרת':           [172,167],'טבריה':        [190,157],
+  'צפת':          [188,90], 'כרמיאל':        [175,130],'עפולה':        [176,174],
+  'מעלות':       [168,80], 'שלומי':          [165,74], 'נחריה':        [160,95],
+  'ביתר עילית':  [170,280],'בית שמש':        [164,280],'מעלה אדומים': [184,278],
+  'אשדוד':        [140,292],'אשקלון':        [133,307],'שדרות':        [128,320],
+  'נתיבות':       [130,327],'אופקים':        [133,337],'באר שבע':      [148,390],
+  'אילת':         [156,560],'רהט':           [147,400],'דימונה':       [162,406],
+  'ים המלח':      [188,328],'ערד':           [170,390],'מצפה רמון':   [150,445],
+  'עוטף עזה':    [127,312],'שדות נגב':       [130,328],'לכיש':         [140,300],
+  'שרון':         [147,230],'השפלה':         [148,278],'מרחב עם':      [126,318],
+  'גליל עליון':  [182,74], 'גליל תחתון':   [180,164],'כנרת':         [187,164],
+  'גולן':         [198,150],'בקעה':          [192,268],'ערבה':         [172,482],
+  'נגב':          [148,422],'חברון':         [172,305],'גוש עציון':   [172,288],
+  'יריחו':        [188,295],'רמאללה':        [175,278],'טולכרם':       [158,196],
+  'ג׳נין':       [172,188],'שכם':            [175,220],'קלנסווה':      [158,216],
+  'כפר ורדים':   [174,124],'מגדל העמק':     [170,170],'עומר':         [152,388],
+  'להבים':        [148,394],'ירוחם':         [150,432],'ניצנה':        [136,448],
+};
 
 function ge(id){return document.getElementById(id);}
 
 function tick(){
   var t=new Date();
-  ge('header-time').textContent=t.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+  ge('ht').textContent=t.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
 }
 setInterval(tick,1000);tick();
 
-async function fetchJSON(url){
+var lastData=[];
+
+async function poll(){
   try{
-    var r=await fetch(url,{headers:HDRS,cache:'no-store'});
-    var txt=await r.text();
-    return txt.trim()?JSON.parse(txt):null;
-  }catch(e){console.warn('fetch:',e.message);return null;}
+    var r=await fetch(API,{cache:'no-store'});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    var data=await r.json();
+    lastData=data;
+    process(data);
+    ge('lu').textContent='עדכון: '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    ge('src').style.color='rgba(61,126,255,.45)';
+  }catch(e){
+    ge('lu').textContent='שגיאה: '+e.message;
+    ge('src').style.color='rgba(255,80,80,.5)';
+    console.warn('API error:',e);
+  }
 }
 
-function renderAlerts(data){
-  var areas=(data&&Array.isArray(data.data))?data.data:[];
-  var active=areas.length>0;
-  var cat=String(data&&data.cat||'');
-  var desc=(data&&data.desc)||'';
+var THREAT={0:'ירי רקטות 🚀',1:'חדירת מחבלים ⚠️',2:'חומרים מסוכנים ☣️',3:'רעידת אדמה 🌍',4:'גל צונאמי 🌊',5:'כלי טיס עוין ✈️',6:'חדירת כלי טיס ✈️'};
 
-  var badge=ge('status-badge');
-  var stxt=ge('status-text');
-  badge.className=active?'alert':'';
-  stxt.textContent=active?('🚨 אזעקה פעילה — '+areas.length+' אזורים'):'✅ אין אזעקות פעילות';
+function process(data){
+  if(!Array.isArray(data)||!data.length)return;
 
-  var at=ge('alert-type');
-  at.textContent=active?(CAT[cat]||(data&&data.title)||'אזעקה פעילה'):'✅ אין אזעקה פעילה';
-  at.className=active?'active':'';
+  var now=Math.floor(Date.now()/1000);
+  var latest=data[0];
+  var latestTime=latest.alerts&&latest.alerts.length?latest.alerts[0].time:0;
+  // get most recent alert time in the event
+  var allT=latest.alerts.map(function(a){return a.time;});
+  var maxT=Math.max.apply(null,allT);
+  var isActive=(now-maxT)<ACTIVE_SECS;
 
-  var hint=ge('alert-hint');
-  if(active&&desc){hint.textContent=desc;hint.style.display='block';}
-  else{hint.style.display='none';}
-
-  ge('stat-zones').textContent=areas.length;
-  ge('stat-zones').className='stat-val'+(active?' red':'');
-  ge('zones-count').textContent=areas.length+' אזורים';
-
-  var list=ge('zones-list');
-  if(!areas.length){
-    list.innerHTML='<div class="no-alerts"><div class="big">🛡️</div><div class="msg">האזור שקט</div><div class="sub">אין אזעקות פעילות כרגע</div></div>';
-  }else{
-    list.innerHTML=areas.map(function(a){return '<div class="zone-row"><div class="zone-pip"></div><span>'+a+'</span></div>';}).join('');
+  // Collect all unique cities in the most recent event
+  var activeCities=[];
+  var activeThreat=0;
+  if(isActive){
+    latest.alerts.forEach(function(a){
+      activeThreat=a.threat;
+      a.cities.forEach(function(c){if(activeCities.indexOf(c)<0)activeCities.push(c);});
+    });
   }
 
-  // SVG markers
+  // Header + badge
+  var sb=ge('sb'),st=ge('st');
+  if(isActive){
+    sb.className='alert';
+    st.textContent='🚨 אזעקה פעילה — '+activeCities.length+' אזורים';
+  }else{
+    sb.className='';
+    st.textContent='✅ אין אזעקות פעילות';
+  }
+
+  // Alert card
+  var at=ge('at'),ah=ge('ah');
+  if(isActive){
+    at.className='active';
+    at.textContent=(THREAT[activeThreat])||'אזעקה פעילה';
+    var ago=now-maxT;
+    ah.textContent='לפני '+ago+' שניות · '+activeCities.length+' אזורים';
+    ah.style.display='block';
+  }else{
+    at.className='';
+    at.textContent='✅ אין אזעקה פעילה';
+    ah.style.display='none';
+  }
+
+  // Stats
+  ge('sv1').textContent=activeCities.length;
+  ge('sv1').className='sv'+(activeCities.length?' r':'');
+
+  // Count 24h alerts
+  var h24=0;
+  var cutoff=now-86400;
+  data.forEach(function(ev){ev.alerts.forEach(function(a){if(a.time>cutoff)h24++;});});
+  ge('sv2').textContent=h24||'—';
+  ge('zc').textContent=activeCities.length+' אזורים';
+
+  // Zones list
+  var zl=ge('zl');
+  if(!activeCities.length){
+    zl.innerHTML='<div class="na"><div class="bi">🛡️</div><div class="bm">האזור שקט</div><div class="bs">אין אזעקות פעילות</div></div>';
+  }else{
+    zl.innerHTML=activeCities.map(function(c){
+      return '<div class="zr" onclick="highlightCity(\''+c.replace(/'/g,"\\'")+'\')"><div class="zp"></div><span>'+c+'</span></div>';
+    }).join('');
+  }
+
+  // Map markers
+  renderMarkers(activeCities,activeThreat);
+
+  // History
+  renderHistory(data,now);
+}
+
+function renderMarkers(cities,threat){
   var layer=ge('aml');
   layer.innerHTML='';
-  areas.forEach(function(area,i){
-    var c=null;
-    Object.keys(ZONES).forEach(function(k){if(!c&&(area.includes(k)||k.includes(area)))c=ZONES[k];});
-    if(!c)c=[148+(Math.random()-.5)*30,280+(Math.random()-.5)*60];
-    var x=c[0],y=c[1],d=(i*0.2).toFixed(2);
+  cities.forEach(function(city,i){
+    var c=findCoords(city);
+    var x=c[0],y=c[1],d=(i*0.18).toFixed(2);
     layer.innerHTML+=
-      '<circle cx="'+x+'" cy="'+y+'" r="8" fill="none" stroke="rgba(255,40,40,.6)" stroke-width="1.5" style="animation:zp 1.8s ease-out '+d+'s infinite;transform-origin:'+x+'px '+y+'px"/>'+
-      '<circle cx="'+x+'" cy="'+y+'" r="5" fill="rgba(255,40,40,.25)" stroke="rgba(255,60,60,.8)" stroke-width="1.2" filter="url(#glow2)"/>'+
-      '<circle cx="'+x+'" cy="'+y+'" r="2.5" fill="#ff3030"/>';
+      '<circle cx="'+x+'" cy="'+y+'" r="7" fill="none" stroke="rgba(255,48,48,.55)" stroke-width="1.2"'+
+      ' style="animation:zp 1.9s ease-out '+d+'s infinite;transform-origin:'+x+'px '+y+'px"/>'+
+      '<circle cx="'+x+'" cy="'+y+'" r="4.5" fill="rgba(255,48,48,.22)" stroke="rgba(255,65,65,.75)" stroke-width="1" filter="url(#g2)"/>'+
+      '<circle cx="'+x+'" cy="'+y+'" r="2.2" fill="#ff3030"/>'+
+      '<title>'+city+'</title>';
   });
-
-  var now=new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  ge('last-update').textContent='עדכון: '+now;
 }
 
-function renderHistory(list){
-  ge('stat-hist').textContent=list.length||'—';
-  var scroll=ge('history-scroll');
-  if(!list.length){
-    scroll.innerHTML='<div style="text-align:center;padding:14px;color:var(--text-dim);font-size:.76em;">אין נתוני היסטוריה<br><small style="opacity:.6">נדרש IP ישראלי</small></div>';
-    return;
+function findCoords(city){
+  // exact match
+  if(CITIES[city])return CITIES[city];
+  // partial match
+  var keys=Object.keys(CITIES);
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i];
+    if(city.indexOf(k)>=0||k.indexOf(city)>=0)return CITIES[k];
   }
-  scroll.innerHTML=list.slice(0,20).map(function(item){
-    var t=item.alertDate?new Date(item.alertDate).toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'}):'—';
-    var areas=Array.isArray(item.data)?item.data.slice(0,3).join(', ')+(item.data.length>3?'...':''):(item.data||'—');
-    return '<div class="hist-row"><span class="hist-time">'+t+'</span><span class="hist-area">'+areas+'</span></div>';
-  }).join('');
+  // fallback: scatter around center
+  var seed=city.charCodeAt(0)%100;
+  return [130+(seed%60),200+(seed*3)%200];
 }
 
-async function pollAlerts(){var d=await fetchJSON(ALERT_URL);renderAlerts(d||{});}
-async function pollHistory(){var d=await fetchJSON(HISTORY_URL);renderHistory(Array.isArray(d)?d:[]);}
+function highlightCity(city){
+  var c=findCoords(city);
+  var tt=ge('mtt');
+  tt.textContent='⚠️ '+city;
+  // position relative to SVG wrapper
+  var wrap=ge('sw');
+  var svg=ge('im');
+  var svgRect=svg.getBoundingClientRect();
+  var wrapRect=wrap.getBoundingClientRect();
+  // convert SVG coords to pixel
+  var scaleX=svgRect.width/300;
+  var scaleY=svgRect.height/620;
+  var px=(c[0]*scaleX)+svgRect.left-wrapRect.left;
+  var py=(c[1]*scaleY)+svgRect.top-wrapRect.top-40;
+  tt.style.left=px+'px';
+  tt.style.top=py+'px';
+  tt.style.display='block';
+  setTimeout(function(){tt.style.display='none';},2500);
+}
+
+function renderHistory(data,now){
+  var hsc=ge('hsc');
+  if(!data.length){hsc.innerHTML='<div style="text-align:center;padding:14px;color:var(--tx2);font-size:.76em;">אין נתונים</div>';return;}
+  var rows=[];
+  data.slice(0,30).forEach(function(ev){
+    ev.alerts.forEach(function(a){
+      var t=new Date(a.time*1000).toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+      var date=new Date(a.time*1000).toLocaleDateString('he-IL',{day:'2-digit',month:'2-digit'});
+      var cities=a.cities.slice(0,2).join(', ')+(a.cities.length>2?'...':'');
+      var threat=a.threat===5?'✈️':(a.threat===0?'🚀':'⚠️');
+      var agoS=now-a.time;
+      var agoTxt=agoS<3600?Math.floor(agoS/60)+'דק':'';
+      rows.push('<div class="hr">'+
+        '<span class="ht2">'+date+' '+t+'</span>'+
+        '<span class="ha">'+threat+' '+cities+'</span>'+
+        (agoTxt?'<span class="hb">'+agoTxt+'</span>':'')+
+      '</div>');
+    });
+  });
+  hsc.innerHTML=rows.join('')||'<div style="text-align:center;padding:14px;color:var(--tx2);font-size:.76em;">אין היסטוריה</div>';
+}
 
 async function init(){
-  await Promise.all([pollAlerts(),pollHistory()]);
+  try{await poll();}catch(e){ge('le').textContent='שגיאה: '+e.message;ge('le').style.display='block';}
   var ld=ge('loading');
   ld.style.opacity='0';
-  setTimeout(function(){ld.style.display='none';},600);
-  setInterval(pollAlerts,10000);
-  setInterval(pollHistory,60000);
+  setTimeout(function(){ld.style.display='none';},580);
+  setInterval(poll,10000);
 }
-
 init();
 </script>
 </body>
