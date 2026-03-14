@@ -229,8 +229,23 @@ html,body{width:100%;height:100%;background:var(--bg);color:var(--tx);font-famil
 </div>
 
 <script>
-var API_LIVE    = 'https://api.tzevaadom.co.il/notifications';
-var API_HISTORY = 'https://api.tzevaadom.co.il/alerts-history';
+// Data sources — priority order:
+// 1. HA sensors (same-origin, no CORS) — from our smart_home_azakot integration
+// 2. CORS proxy fallback for testing outside HA
+var HA_BASE = window.location.origin; // e.g. http://homeassistant.local:8123
+var HA_TOKEN = null; // will be read from meta tag if available
+
+// HA sensor entity IDs (from smart_home_azakot integration)
+var HA_STATUS   = HA_BASE + '/api/states/binary_sensor.azakot_active';
+var HA_ZONES    = HA_BASE + '/api/states/sensor.azakot_zones_list';
+var HA_COUNT    = HA_BASE + '/api/states/sensor.azakot_zones_count';
+var HA_CATEGORY = HA_BASE + '/api/states/sensor.azakot_category';
+var HA_HISTORY  = HA_BASE + '/api/states/sensor.azakot_history_count';
+
+// CORS proxy fallback (used when HA sensors not available)
+var PROXY = 'https://corsproxy.io/?';
+var API_LIVE    = PROXY + encodeURIComponent('https://api.tzevaadom.co.il/notifications');
+var API_HISTORY = PROXY + encodeURIComponent('https://api.tzevaadom.co.il/alerts-history');
 
 // City name → approximate SVG coords on our 300x620 map
 var CITIES = {
@@ -271,35 +286,127 @@ setInterval(tick,1000);tick();
 
 var lastData=[];
 
+// Try to get HA long-lived token from meta tag (injected by HA)
+function getHAToken(){
+  var m=document.querySelector('meta[name=ha-token]');
+  return m?m.content:null;
+}
+
+async function fetchHA(url){
+  var tok=getHAToken()||HA_TOKEN;
+  var opts={cache:'no-store'};
+  if(tok)opts.headers={'Authorization':'Bearer '+tok};
+  var r=await fetch(url,opts);
+  if(!r.ok)throw new Error('HA '+r.status);
+  return r.json();
+}
+
 async function poll(){
   try{
-    // /notifications = only currently active alerts (empty [] when quiet)
-    var rLive=await fetch(API_LIVE,{cache:'no-store'});
-    if(!rLive.ok)throw new Error('HTTP '+rLive.status);
-    var live=await rLive.json();
-    renderLive(live);
-    ge('lu').textContent='עדכון: '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    ge('src').style.color='rgba(61,126,255,.45)';
-  }catch(e){
-    ge('lu').textContent='שגיאה: '+e.message;
-    ge('src').style.color='rgba(255,80,80,.5)';
-    console.warn('API error:',e);
+    // Strategy 1: read our HA sensors (same-origin, always works from HA iframe)
+    var st=await fetchHA(HA_STATUS);
+    var isActive=(st.state==='on');
+    var zones=[], cat='', countdown='';
+
+    if(isActive){
+      try{
+        var zs=await fetchHA(HA_ZONES);
+        var zStr=zs.attributes&&zs.attributes.zones?zs.attributes.zones:zs.state;
+        if(Array.isArray(zStr))zones=zStr;
+        else if(typeof zStr==='string'&&zStr!=='unknown')zones=zStr.split('•').map(function(s){return s.trim();}).filter(Boolean);
+      }catch(e){}
+      try{var cs=await fetchHA(HA_CATEGORY);cat=cs.state||'';}catch(e){}
+    }
+    renderLiveFromHA(isActive,zones,cat);
+    ge('lu').textContent='מקור: HA · '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    ge('src').style.color='rgba(0,230,118,.45)';
+
+  }catch(haErr){
+    // Strategy 2: CORS proxy fallback (for testing outside HA)
+    try{
+      var rLive=await fetch(API_LIVE,{cache:'no-store'});
+      if(!rLive.ok)throw new Error('proxy '+rLive.status);
+      var live=await rLive.json();
+      renderLive(live);
+      ge('lu').textContent='מקור: proxy · '+new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      ge('src').style.color='rgba(255,180,0,.45)';
+    }catch(proxyErr){
+      ge('lu').textContent='שגיאה — בדוק חיבור';
+      ge('src').style.color='rgba(255,80,80,.5)';
+      console.warn('HA err:',haErr,'Proxy err:',proxyErr);
+    }
   }
 }
 
+// Render from HA sensors
+function renderLiveFromHA(isActive,zones,cat){
+  var sb=ge('sb'),st=ge('st');
+  if(isActive){
+    sb.className='alert';
+    st.textContent='🚨 אזעקה פעילה — '+zones.length+' אזורים';
+  }else{
+    sb.className='';
+    st.textContent='✅ אין אזעקות פעילות';
+  }
+  var at=ge('at'),ah=ge('ah');
+  if(isActive){
+    at.className='active';
+    at.textContent=cat||'אזעקה פעילה';
+    ah.style.display='none';
+  }else{
+    at.className='';
+    at.textContent='✅ אין אזעקה פעילה';
+    ah.style.display='none';
+  }
+  ge('sv1').textContent=zones.length;
+  ge('sv1').className='sv'+(zones.length?' r':'');
+  ge('zc').textContent=zones.length+' אזורים';
+  var zl=ge('zl');
+  if(!zones.length){
+    zl.innerHTML='<div class="na"><div class="bi">🛡️</div><div class="bm">האזור שקט</div><div class="bs">אין אזעקות פעילות</div></div>';
+  }else{
+    zl.innerHTML=zones.map(function(c){
+      return '<div class="zr" onclick="highlightCity(''+c.replace(/'/g,"\'")+'')"><div class="zp"></div><span>'+c+'</span></div>';
+    }).join('');
+    renderMarkersFromLive(zones.map(function(c){return {name:c};}),zones,0);
+  }
+  if(!isActive)ge('aml').innerHTML='';
+}
+
 async function pollHistory(){
+  // Try HA sensor for history count
+  try{
+    var hc=await fetchHA(HA_HISTORY);
+    var cnt=parseInt(hc.state)||0;
+    ge('sv2').textContent=cnt||'—';
+    // history list from attributes
+    if(hc.attributes&&hc.attributes.history){
+      renderHistoryFromHA(hc.attributes.history);
+      return;
+    }
+  }catch(e){}
+  // Fallback: proxy
   try{
     var r=await fetch(API_HISTORY,{cache:'no-store'});
     if(!r.ok)return;
     var data=await r.json();
     lastData=data;
-    // count 24h
     var now=Math.floor(Date.now()/1000);
     var h24=0,cutoff=now-86400;
     data.forEach(function(ev){ev.alerts.forEach(function(a){if(a.time>cutoff)h24++;});});
     ge('sv2').textContent=h24||'—';
     renderHistory(data,now);
   }catch(e){console.warn('History error:',e);}
+}
+
+function renderHistoryFromHA(history){
+  var hsc=ge('hsc');
+  if(!history||!history.length){hsc.innerHTML='<div style="text-align:center;padding:14px;color:var(--tx2);font-size:.76em;">אין היסטוריה</div>';return;}
+  hsc.innerHTML=history.slice(0,20).map(function(item){
+    var t=item.time||'—', areas=item.area||item.areas||'—';
+    if(Array.isArray(areas))areas=areas.slice(0,2).join(', ')+(areas.length>2?'...':'');
+    return '<div class="hr"><span class="ht2">'+t+'</span><span class="ha">'+areas+'</span></div>';
+  }).join('');
 }
 
 var THREAT={0:'ירי רקטות 🚀',1:'חדירת מחבלים ⚠️',2:'חומרים מסוכנים ☣️',3:'רעידת אדמה 🌍',4:'גל צונאמי 🌊',5:'כלי טיס עוין ✈️',6:'חדירת כלי טיס ✈️'};
