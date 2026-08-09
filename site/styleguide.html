@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>amp — style guide</title>
+    <meta
+      name="description"
+      content="Tokens, type scale, and components from the amp style reference."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="shell nav__inner">
+        <a class="logo" href="index.html" aria-label="amp home">
+          <svg class="logo__mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="8" y="2" width="8" height="20" rx="4" fill="#0a0a0a" />
+            <rect x="8" y="6" width="8" height="2.5" fill="#ff6105" />
+          </svg>
+          <span>amp</span>
+        </a>
+
+        <nav class="nav__links" aria-label="Primary">
+          <a href="index.html#product">Product</a>
+          <a href="index.html#how">How it works</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="index.html#band">The idea</a>
+          <a href="styleguide.html" aria-current="page">Style guide</a>
+        </nav>
+
+        <a class="btn btn--nav" href="index.html#buy">Buy Now</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <p class="eyebrow">Style reference</p>
+            <h1 class="heading-lg" style="margin-top: var(--spacing-16)">
+              One orange, one typeface, one object.
+            </h1>
+            <hr class="rule" />
+            <p class="section-head__body measure">
+              The full token set as implemented on this site. Orange is rationed to the
+              primary CTA, the active step badge, and the accent rule &mdash; everything
+              else lives in white, off-white, and near-black.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- Colors -->
+      <section class="section" id="tokens">
+        <div class="shell">
+          <h2 class="heading">Color</h2>
+
+          <div class="swatches">
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #ff6105"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Amp Orange</span><span class="swatch__hex">#ff6105</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #ffa069"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Amp Glow</span><span class="swatch__hex">#ffa069</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #ffdfcd"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Peach Wash</span><span class="swatch__hex">#ffdfcd</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #0a0a0a"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Ink</span><span class="swatch__hex">#0a0a0a</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #292b2a"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Carbon</span><span class="swatch__hex">#292b2a</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #7a7b7b"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Slate</span><span class="swatch__hex">#7a7b7b</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #a2a3a2"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Ash</span><span class="swatch__hex">#a2a3a2</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #e5e5e5"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Graphite Hairline</span
+                ><span class="swatch__hex">#e5e5e5</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #dfe0df"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Fog</span><span class="swatch__hex">#dfe0df</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #e5e7eb"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Bone</span><span class="swatch__hex">#e5e7eb</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #f3f4f3"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Linen</span><span class="swatch__hex">#f3f4f3</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #202120"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Charcoal</span><span class="swatch__hex">#202120</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #3c3e3d"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Smoke</span><span class="swatch__hex">#3c3e3d</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #ffffff; border-bottom: 1px solid #e5e5e5"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">Canvas White</span
+                ><span class="swatch__hex">#ffffff</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- Type scale -->
+      <section class="section">
+        <div class="shell">
+          <h2 class="heading">Type scale</h2>
+          <p class="body" style="margin-top: var(--spacing-12)">
+            PublicaSans at weights 300 / 400 / 500. Tracking tightens as size grows and
+            never loosens.
+          </p>
+
+          <div style="margin-top: var(--spacing-40); border-top: 1px solid var(--color-graphite-hairline)">
+            <div class="type-row">
+              <p class="type-row__meta">display &middot; 72px / 1.1 / -0.036em / 300</p>
+              <p class="type-row__sample display" style="font-size: 72px">One column</p>
+            </div>
+            <div class="type-row">
+              <p class="type-row__meta">heading-lg &middot; 48px / 1.2 / -0.03em / 300</p>
+              <p class="type-row__sample heading-lg" style="font-size: 48px">Designed to move you</p>
+            </div>
+            <div class="type-row">
+              <p class="type-row__meta">heading &middot; 32px / 1.22 / -0.02em / 300</p>
+              <p class="type-row__sample heading">The details</p>
+            </div>
+            <div class="type-row">
+              <p class="type-row__meta">heading-sm &middot; 24px / 1.33 / -0.02em / 500</p>
+              <p class="type-row__sample heading-sm">Digital resistance</p>
+            </div>
+            <div class="type-row">
+              <p class="type-row__meta">subheading &middot; 18px / 1.5 / -0.01em / 400</p>
+              <p class="type-row__sample subheading">Anchor the column</p>
+            </div>
+            <div class="type-row">
+              <p class="type-row__meta">body &middot; 16px / 1.56 / -0.01em / 400</p>
+              <p class="type-row__sample">Everything a home gym needs, folded into one machined column.</p>
+            </div>
+            <div class="type-row">
+              <p class="type-row__meta">body-sm &middot; 14px / 1.5 / 0 / 400</p>
+              <p class="type-row__sample body-sm">Free delivery and in-home setup through March 31.</p>
+            </div>
+            <div class="type-row">
+              <p class="type-row__meta">caption &middot; 12px / 1.5 / 0 / 400</p>
+              <p class="type-row__sample body-sm" style="font-size: 12px">
+                $2,495 &middot; or $69/mo for 36 months
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- Components -->
+      <section class="section" id="components">
+        <div class="shell">
+          <h2 class="heading">Components</h2>
+
+          <div class="demo-grid">
+            <div class="demo">
+              <p class="demo__label">Buttons</p>
+              <div class="demo__stage">
+                <button class="btn btn--primary" type="button">
+                  Buy Now
+                  <svg class="chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path
+                      d="M6 3.5 10.5 8 6 12.5"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+                <button class="btn btn--secondary" type="button">Learn more</button>
+                <button class="btn btn--ghost" type="button">Compare</button>
+                <button class="btn btn--nav" type="button">Buy Now</button>
+              </div>
+              <p class="body-sm muted">
+                Elevation is a privilege: the orange glow belongs to the primary pill only.
+              </p>
+            </div>
+
+            <div class="demo">
+              <p class="demo__label">Input (pill)</p>
+              <div class="demo__stage">
+                <input class="input" type="email" placeholder="you@example.com" aria-label="Email" />
+              </div>
+              <p class="body-sm muted">50px radius, 1px hairline, focus ring #ff6105 at 40%.</p>
+            </div>
+
+            <div class="demo">
+              <p class="demo__label">Step indicator</p>
+              <ol class="steps" style="margin-top: 0; gap: var(--spacing-20)">
+                <li class="step step--active">
+                  <span class="step__badge">Step 1</span>
+                  <h3 class="step__title">Anchor the column</h3>
+                </li>
+                <li class="step">
+                  <span class="step__badge">Step 2</span>
+                  <h3 class="step__title">Pair the app</h3>
+                </li>
+              </ol>
+            </div>
+
+            <div class="demo">
+              <p class="demo__label">Radius ladder</p>
+              <div class="radius-ladder">
+                <div class="radius-ladder__item" style="border-radius: 5px">5</div>
+                <div class="radius-ladder__item" style="border-radius: 8px">8</div>
+                <div class="radius-ladder__item" style="border-radius: 24px">24</div>
+                <div class="radius-ladder__item" style="border-radius: 32px">32</div>
+                <div class="radius-ladder__item" style="border-radius: 50px">50</div>
+              </div>
+              <p class="body-sm muted">Cards 5 &middot; images 8 &middot; secondary 24 &middot; CTA and inputs 50.</p>
+            </div>
+
+            <div class="demo">
+              <p class="demo__label">Editorial heading</p>
+              <div>
+                <h3 class="heading-lg" style="font-size: 40px">The idea</h3>
+                <hr class="rule" style="margin-top: var(--spacing-16); width: 96px" />
+              </div>
+              <p class="body-sm muted">
+                A 2px accent rule at roughly one third of the heading width.
+              </p>
+            </div>
+
+            <div class="demo" style="background: var(--color-peach-wash); border-color: transparent">
+              <p class="demo__label" style="color: var(--color-carbon)">Featured card</p>
+              <h3 class="heading-sm">Peach is rationed</h3>
+              <p class="body-sm" style="color: var(--color-carbon)">
+                One peach card per section. It adds warmth without competing with the
+                orange.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- Surfaces -->
+      <section class="section">
+        <div class="shell">
+          <h2 class="heading">Surface ladder</h2>
+          <div class="swatches" style="margin-top: var(--spacing-24)">
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #ffffff; border-bottom: 1px solid #e5e5e5"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">0 &middot; Canvas</span><span class="swatch__hex">#ffffff</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #f3f4f3"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">1 &middot; Linen</span><span class="swatch__hex">#f3f4f3</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #e5e7eb"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">2 &middot; Bone</span><span class="swatch__hex">#e5e7eb</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #ffdfcd"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">3 &middot; Peach Wash</span><span class="swatch__hex">#ffdfcd</span>
+              </div>
+            </div>
+            <div class="swatch">
+              <div class="swatch__chip" style="background: #202120"></div>
+              <div class="swatch__meta">
+                <span class="swatch__name">4 &middot; Charcoal</span><span class="swatch__hex">#202120</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- Do / Don't -->
+      <section class="section">
+        <div class="shell">
+          <h2 class="heading">Do &amp; don&rsquo;t</h2>
+          <div class="dos">
+            <div class="dos__col dos__col--do">
+              <h3>Do</h3>
+              <ul>
+                <li>Keep #ff6105 for the primary CTA, the active step badge, and the accent rule.</li>
+                <li>Set display headlines at 48&ndash;78px in weight 300 with -0.030em to -0.036em tracking.</li>
+                <li>Stay on the radius ladder: 5 / 8 / 24 / 32 / 50.</li>
+                <li>Stack surfaces in order: white &rarr; linen &rarr; bone &rarr; peach &rarr; charcoal.</li>
+                <li>Use hairline 1px borders as the primary structural device.</li>
+              </ul>
+            </div>
+            <div class="dos__col">
+              <h3>Don&rsquo;t</h3>
+              <ul>
+                <li>Don&rsquo;t add a second accent hue &mdash; the system is monochrome plus one orange.</li>
+                <li>Don&rsquo;t use weight 600 or 700; the scale tops out at 500.</li>
+                <li>Don&rsquo;t put shadows on cards, images, or secondary buttons.</li>
+                <li>Don&rsquo;t set display text in all-caps or with positive letter-spacing.</li>
+                <li>Don&rsquo;t fill large areas with orange &mdash; it punctuates, it doesn&rsquo;t paint.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer__base" style="margin-top: 0; border-top: 0; padding-top: 0">
+          <span>&copy; 2026 amp. Example site &mdash; not a real product.</span>
+          <a href="index.html">Back to the site &rarr;</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

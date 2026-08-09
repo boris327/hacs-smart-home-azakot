@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>amp — one column. every workout.</title>
+    <meta
+      name="description"
+      content="amp is a single-column strength trainer with digital resistance. One object, one accent, one confident system."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Announcement bar -->
+    <div class="announcement">
+      <div class="shell announcement__inner">
+        <span>Free delivery and in-home setup through March 31.</span>
+        <a class="announcement__link" href="#buy">Let's Go &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Top navigation -->
+    <header class="nav">
+      <div class="shell nav__inner">
+        <a class="logo" href="index.html" aria-label="amp home">
+          <svg class="logo__mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="8" y="2" width="8" height="20" rx="4" fill="#0a0a0a" />
+            <rect x="8" y="6" width="8" height="2.5" fill="#ff6105" />
+          </svg>
+          <span>amp</span>
+        </a>
+
+        <nav class="nav__links" aria-label="Primary">
+          <a href="#product">Product</a>
+          <a href="#how">How it works</a>
+          <a href="#specs">Specs</a>
+          <a href="#band">The idea</a>
+          <a href="styleguide.html">Style guide</a>
+        </nav>
+
+        <a class="btn btn--nav" href="#buy">Buy Now</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero: full-viewport product, single CTA anchored bottom-center -->
+      <section class="hero">
+        <div class="hero__intro">
+          <p class="eyebrow">The amp column</p>
+          <h1 class="display">One column.<br />Every workout.</h1>
+          <p class="hero__sub measure" style="margin-inline: auto">
+            Digital resistance from 1 to 90 kg, in a footprint the size of a floor lamp.
+            No plates, no rack, no room given up.
+          </p>
+        </div>
+
+        <div class="hero__stage">
+          <!-- The product is the hero: one object, shot isolated. -->
+          <svg
+            class="hero__product"
+            viewBox="0 0 280 560"
+            role="img"
+            aria-label="The amp column, a floor-standing strength trainer"
+          >
+            <defs>
+              <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#d9d3cb" />
+                <stop offset="18%" stop-color="#fbfaf8" />
+                <stop offset="52%" stop-color="#f0ece6" />
+                <stop offset="88%" stop-color="#cdc6bd" />
+                <stop offset="100%" stop-color="#b9b1a8" />
+              </linearGradient>
+              <linearGradient id="baseGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#262624" />
+                <stop offset="45%" stop-color="#3c3e3d" />
+                <stop offset="100%" stop-color="#1c1d1c" />
+              </linearGradient>
+              <radialGradient id="floor" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(60,50,40,0.32)" />
+                <stop offset="100%" stop-color="rgba(60,50,40,0)" />
+              </radialGradient>
+            </defs>
+
+            <ellipse cx="140" cy="520" rx="120" ry="26" fill="url(#floor)" />
+
+            <!-- column -->
+            <rect x="96" y="24" width="88" height="472" rx="36" fill="url(#bodyGrad)" />
+            <rect
+              x="96"
+              y="24"
+              width="88"
+              height="472"
+              rx="36"
+              fill="none"
+              stroke="#c4bdb4"
+              stroke-width="1"
+            />
+
+            <!-- top cap + orange brand stroke -->
+            <rect x="112" y="44" width="56" height="6" rx="3" fill="#ff6105" />
+            <circle cx="140" cy="80" r="10" fill="none" stroke="#292b2a" stroke-width="1.5" />
+            <circle cx="140" cy="80" r="3" fill="#292b2a" />
+
+            <!-- handle track -->
+            <rect x="130" y="150" width="20" height="230" rx="10" fill="#e9e3db" />
+            <rect
+              x="130"
+              y="150"
+              width="20"
+              height="230"
+              rx="10"
+              fill="none"
+              stroke="#d3ccc3"
+              stroke-width="1"
+            />
+            <rect x="122" y="236" width="36" height="14" rx="7" fill="#292b2a" />
+            <rect x="126" y="240" width="28" height="2" rx="1" fill="#ff6105" />
+
+            <!-- base -->
+            <rect x="72" y="470" width="136" height="34" rx="17" fill="url(#baseGrad)" />
+            <rect x="104" y="480" width="72" height="2" rx="1" fill="rgba(255,255,255,0.14)" />
+          </svg>
+        </div>
+
+        <div class="hero__cta" id="buy">
+          <a class="btn btn--primary" href="#specs">
+            Buy Now
+            <svg class="chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M6 3.5 10.5 8 6 12.5"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+          <p class="hero__note">$2,495 &middot; or $69/mo for 36 months &middot; 30-day home trial</p>
+        </div>
+      </section>
+
+      <!-- Press strip -->
+      <section class="press">
+        <div class="shell">
+          <p class="eyebrow press__label">Featured on</p>
+          <div class="press__row">
+            <span class="press__logo press__logo--light">Wirecutter</span>
+            <span class="press__logo">MEN&rsquo;S HEALTH</span>
+            <span class="press__logo press__logo--wide">Dwell</span>
+            <span class="press__logo press__logo--light">Outside</span>
+            <span class="press__logo">GQ</span>
+            <span class="press__logo press__logo--wide">Core77</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Editorial section + ghost card grid -->
+      <section class="section" id="product">
+        <div class="shell">
+          <div class="section-head">
+            <h2 class="heading-lg">Designed around one object.</h2>
+            <hr class="rule" />
+            <p class="section-head__body measure">
+              Everything a home gym needs, folded into a single machined column. The
+              hardware disappears into the room; the training doesn&rsquo;t.
+            </p>
+          </div>
+
+          <div class="card-grid">
+            <article class="card">
+              <figure class="card__figure">
+                <svg viewBox="0 0 200 150" role="img" aria-label="Digital resistance dial">
+                  <circle cx="100" cy="75" r="44" fill="none" stroke="#292b2a" stroke-width="1.5" />
+                  <circle cx="100" cy="75" r="30" fill="none" stroke="#dfe0df" stroke-width="1.5" />
+                  <path
+                    d="M100 31a44 44 0 0 1 38 66"
+                    fill="none"
+                    stroke="#ff6105"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                  />
+                  <circle cx="100" cy="75" r="4" fill="#0a0a0a" />
+                  <path d="M100 75 122 56" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </figure>
+              <h3 class="heading-sm card__title">Digital resistance</h3>
+              <p class="card__body">
+                1&ndash;90 kg in 0.5 kg steps, adjusted mid-rep. Eccentric loading and
+                spotter mode are software, not steel.
+              </p>
+              <p class="card__meta">Hardware</p>
+            </article>
+
+            <article class="card">
+              <figure class="card__figure">
+                <svg viewBox="0 0 200 150" role="img" aria-label="Footprint diagram">
+                  <rect x="58" y="34" width="84" height="82" rx="4" fill="none" stroke="#dfe0df" stroke-width="1.5" />
+                  <rect x="86" y="52" width="28" height="46" rx="14" fill="none" stroke="#292b2a" stroke-width="1.5" />
+                  <path d="M58 126h84" stroke="#ff6105" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M58 120v12M142 120v12" stroke="#a2a3a2" stroke-width="1.2" />
+                </svg>
+              </figure>
+              <h3 class="heading-sm card__title">42 &times; 42 cm</h3>
+              <p class="card__body">
+                Less floor than an armchair. Wall-anchored, cable-free, and quiet enough
+                for a shared apartment at 6 a.m.
+              </p>
+              <p class="card__meta">Footprint</p>
+            </article>
+
+            <article class="card">
+              <figure class="card__figure">
+                <svg viewBox="0 0 200 150" role="img" aria-label="Progress chart">
+                  <path d="M52 112h96" stroke="#dfe0df" stroke-width="1.5" />
+                  <path d="M52 40v72" stroke="#dfe0df" stroke-width="1.5" />
+                  <path
+                    d="M60 100 84 88l22 10 20-26 22-14"
+                    fill="none"
+                    stroke="#ff6105"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <circle cx="148" cy="58" r="4" fill="#ff6105" />
+                  <path d="M60 76h20M60 60h34" stroke="#292b2a" stroke-width="1.2" />
+                </svg>
+              </figure>
+              <h3 class="heading-sm card__title">Load that follows you</h3>
+              <p class="card__body">
+                Every set is logged. amp reads your bar speed and moves the weight before
+                you decide to.
+              </p>
+              <p class="card__meta">Software</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to use: 50/50 step list + phone mockup -->
+      <section class="section" id="how" style="background: var(--color-canvas-white)">
+        <div class="shell split">
+          <div>
+            <div class="section-head">
+              <h2 class="heading-lg">How to use amp</h2>
+              <hr class="rule" />
+            </div>
+
+            <ol class="steps">
+              <li class="step step--active">
+                <span class="step__badge">Step 1</span>
+                <h3 class="step__title">Anchor the column</h3>
+                <p class="step__body">
+                  Two bolts, one wall plate, fifteen minutes. Our team does it for you on
+                  delivery day.
+                </p>
+              </li>
+              <li class="step">
+                <span class="step__badge">Step 2</span>
+                <h3 class="step__title">Pair the app</h3>
+                <p class="step__body">
+                  amp finds your network, calibrates the arm, and runs a three-minute
+                  strength baseline.
+                </p>
+              </li>
+              <li class="step">
+                <span class="step__badge">Step 3</span>
+                <h3 class="step__title">Train</h3>
+                <p class="step__body">
+                  Pick a program or freestyle. The column handles the weight; you handle
+                  the reps.
+                </p>
+              </li>
+            </ol>
+          </div>
+
+          <!-- Featured peach card — one per section -->
+          <article class="card card--featured">
+            <div class="card__copy">
+              <span class="step__badge" style="background: #ff6105; color: #fff; font-weight: 500"
+                >In the app</span
+              >
+              <h3 class="heading-sm card__title">Setup takes one screen</h3>
+              <p class="card__body">
+                Guided pairing, a live resistance preview, and your first program queued
+                before the box is out of the hallway.
+              </p>
+              <a class="btn btn--secondary" href="#specs">See the app</a>
+            </div>
+
+            <svg
+              class="phone"
+              viewBox="0 0 200 380"
+              role="img"
+              aria-label="amp app onboarding screen"
+            >
+              <rect x="4" y="4" width="192" height="372" rx="28" fill="#0a0a0a" />
+              <rect x="12" y="12" width="176" height="356" rx="22" fill="#ffffff" />
+              <rect x="78" y="20" width="44" height="6" rx="3" fill="#e5e5e5" />
+
+              <rect x="28" y="46" width="52" height="16" rx="8" fill="#ff6105" />
+              <rect x="34" y="52" width="40" height="4" rx="2" fill="#ffffff" />
+
+              <rect x="28" y="76" width="120" height="8" rx="4" fill="#0a0a0a" />
+              <rect x="28" y="92" width="86" height="6" rx="3" fill="#a2a3a2" />
+
+              <rect x="28" y="118" width="144" height="86" rx="8" fill="#f3f4f3" />
+              <rect x="92" y="132" width="16" height="58" rx="8" fill="#ffffff" stroke="#e5e5e5" />
+              <rect x="94" y="140" width="12" height="3" rx="1.5" fill="#ff6105" />
+
+              <rect x="28" y="218" width="144" height="1.5" fill="#e5e5e5" />
+              <rect x="28" y="232" width="70" height="6" rx="3" fill="#292b2a" />
+              <rect x="28" y="246" width="112" height="6" rx="3" fill="#e5e5e5" />
+
+              <rect x="28" y="268" width="144" height="1.5" fill="#e5e5e5" />
+              <rect x="28" y="282" width="58" height="6" rx="3" fill="#292b2a" />
+              <rect x="28" y="296" width="96" height="6" rx="3" fill="#e5e5e5" />
+
+              <rect x="28" y="322" width="144" height="34" rx="17" fill="#ff6105" />
+              <rect x="80" y="336" width="40" height="6" rx="3" fill="#ffffff" />
+            </svg>
+          </article>
+        </div>
+      </section>
+
+      <!-- Dark full-bleed feature band -->
+      <section class="band" id="band">
+        <div class="band__photo" aria-hidden="true"></div>
+        <div class="band__scrim" aria-hidden="true"></div>
+        <div class="shell band__inner">
+          <h2 class="heading-lg">Designed to move you.</h2>
+          <hr class="rule rule--center" />
+          <p class="band__body">
+            A gym is a room full of compromises. amp is one object that removes them &mdash;
+            machined in aluminium, finished to live in a living room, and strong enough to
+            make you stop planning around a commute.
+          </p>
+
+          <div class="band__stats">
+            <div class="stat">
+              <p class="stat__value">90 kg</p>
+              <p class="stat__label">Peak resistance</p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">0.5 kg</p>
+              <p class="stat__label">Adjustment step</p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">38 dB</p>
+              <p class="stat__label">Under full load</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Specs -->
+      <section class="section" id="specs">
+        <div class="shell">
+          <div class="section-head">
+            <h2 class="heading-lg">The details.</h2>
+            <hr class="rule" />
+          </div>
+
+          <div class="specs">
+            <div class="spec">
+              <p class="spec__key">Dimensions</p>
+              <p class="spec__value">2030 &times; 420 &times; 420 mm (H &times; W &times; D)</p>
+            </div>
+            <div class="spec">
+              <p class="spec__key">Weight</p>
+              <p class="spec__value">64 kg, wall-anchored</p>
+            </div>
+            <div class="spec">
+              <p class="spec__key">Resistance</p>
+              <p class="spec__value">1&ndash;90 kg per arm, 0.5 kg increments, concentric and eccentric</p>
+            </div>
+            <div class="spec">
+              <p class="spec__key">Materials</p>
+              <p class="spec__value">Anodised aluminium column, powder-coated steel base, leather grips</p>
+            </div>
+            <div class="spec">
+              <p class="spec__key">Connectivity</p>
+              <p class="spec__value">Wi-Fi 6, Bluetooth 5.3, Apple Health and Google Fit</p>
+            </div>
+            <div class="spec">
+              <p class="spec__key">Warranty</p>
+              <p class="spec__value">5 years on the column, 2 years on the drive system</p>
+            </div>
+            <div class="spec">
+              <p class="spec__key">In the box</p>
+              <p class="spec__value">Column, wall plate, two handles, ankle strap, bar attachment</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Signup -->
+      <section class="signup section--tight">
+        <div class="shell signup__inner">
+          <div>
+            <h2 class="heading">Get the delivery window for your city.</h2>
+            <p class="body" style="margin-top: var(--spacing-8)">
+              One email when amp ships to you. Nothing else.
+            </p>
+          </div>
+
+          <form class="field" onsubmit="return false">
+            <label class="body-sm muted" for="email" style="position: absolute; left: -9999px"
+              >Email address</label
+            >
+            <input class="input" id="email" type="email" placeholder="you@example.com" />
+            <button class="btn btn--primary" type="submit">
+              Notify me
+              <svg class="chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path
+                  d="M6 3.5 10.5 8 6 12.5"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer__grid">
+          <div class="footer__col footer__brand">
+            <a class="logo" href="index.html" aria-label="amp home">
+              <svg class="logo__mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="8" y="2" width="8" height="20" rx="4" fill="#0a0a0a" />
+                <rect x="8" y="6" width="8" height="2.5" fill="#ff6105" />
+              </svg>
+              <span>amp</span>
+            </a>
+            <p>
+              A single-column strength trainer. Designed in Copenhagen, machined in
+              Portugal.
+            </p>
+          </div>
+
+          <div class="footer__col">
+            <h3>Product</h3>
+            <ul>
+              <li><a href="#product">The column</a></li>
+              <li><a href="#how">How it works</a></li>
+              <li><a href="#specs">Specs</a></li>
+              <li><a href="#buy">Buy</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__col">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#specs">Delivery &amp; setup</a></li>
+              <li><a href="#specs">Warranty</a></li>
+              <li><a href="#specs">Returns</a></li>
+              <li><a href="#specs">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__col">
+            <h3>Design</h3>
+            <ul>
+              <li><a href="styleguide.html">Style guide</a></li>
+              <li><a href="styleguide.html#tokens">Tokens</a></li>
+              <li><a href="styleguide.html#components">Components</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer__base">
+          <span>&copy; 2026 amp. Example site &mdash; not a real product.</span>
+          <span>Built from the amp style reference.</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
